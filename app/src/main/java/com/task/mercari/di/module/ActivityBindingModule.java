@@ -1,6 +1,6 @@
 package com.task.mercari.di.module;
 
-import com.task.mercari.MainActivity;
+import com.task.mercari.ui.activity.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

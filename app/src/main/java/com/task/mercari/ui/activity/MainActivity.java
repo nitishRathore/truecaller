@@ -1,10 +1,11 @@
-package com.task.mercari;
+package com.task.mercari.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
+import com.task.mercari.R;
 import com.task.mercari.adapter.FragmentAdapter;
 import com.task.mercari.base.BaseActivity;
 

@@ -5,6 +5,8 @@ import com.task.mercari.repository.network.NetworkService;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Single;
 
 /**
@@ -14,7 +16,7 @@ public class RepositoryService {
 
     private final NetworkService networkService;
 
-
+    @Inject
     public RepositoryService(NetworkService networkService) {
         this.networkService = networkService;
     }

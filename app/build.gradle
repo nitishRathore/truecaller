@@ -73,4 +73,8 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
     //multidex
     implementation "com.android.support:multidex:$mulitdexVersion"
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
+
+    //thirdparty libs
+    implementation 'com.robertlevonyan.view:CustomFloatingActionButton:2.1.1'
 }
