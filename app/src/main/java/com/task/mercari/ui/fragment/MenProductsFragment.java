@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.task.mercari.R;
 import com.task.mercari.adapter.ProductListAdapter;
@@ -41,6 +43,8 @@ public class MenProductsFragment extends BaseFragment {
     ProductListAdapter listAdapter;
     RecyclerView.LayoutManager layoutManager;
     ProductListViewModel listViewModel;
+    TextView txtErrorView;
+    ContentLoadingProgressBar loadingProgressBar;
 
     @Override
     protected int layoutRes() {
@@ -51,6 +55,8 @@ public class MenProductsFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvMensProduct = view.findViewById(R.id.rv_mens);
+        txtErrorView = view.findViewById(R.id.txt_error);
+        loadingProgressBar = view.findViewById(R.id.progress_circular);
         rvMensProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
         listAdapter = new ProductListAdapter();
         rvMensProduct.setAdapter(listAdapter);
@@ -67,5 +73,27 @@ public class MenProductsFragment extends BaseFragment {
                 listAdapter.setProductList(products);
             }
         });
+
+        listViewModel.getError().observe(this, isError -> {
+            if (isError != null) if(isError) {
+                txtErrorView.setVisibility(View.VISIBLE);
+                rvMensProduct.setVisibility(View.GONE);
+                txtErrorView.setText(getText(R.string.error));
+            }else {
+                txtErrorView.setVisibility(View.GONE);
+                txtErrorView.setText(null);
+            }
+        });
+
+        listViewModel.getLoading().observe(this, isLoading -> {
+            if (isLoading != null) {
+                loadingProgressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+                if (isLoading) {
+                    txtErrorView.setVisibility(View.GONE);
+                    rvMensProduct.setVisibility(View.GONE);
+                }
+            }
+        });
+
     }
 }

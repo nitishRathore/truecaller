@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Mercari</string>
 
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="error">An Error Occurred While Loading Data!</string>
+
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>

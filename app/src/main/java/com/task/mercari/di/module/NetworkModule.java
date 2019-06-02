@@ -1,6 +1,7 @@
 package com.task.mercari.di.module;
 
 import com.task.mercari.repository.network.NetworkService;
+import com.task.mercari.util.AppConstants;
 
 import javax.inject.Singleton;
 
@@ -19,25 +20,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module(includes = ViewModelModule.class)
 public class NetworkModule {
 
-    private static final String BASE_URL = "https://s3-ap-northeast-1.amazonaws.com/m-et/Android/json/";
 
-
-    @Singleton
-    @Provides
-    static OkHttpClient provideOkHttpClient() {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC);
-        return new OkHttpClient.Builder().addInterceptor(loggingInterceptor).build();
-
-
-    }
 
 
     @Singleton
     @Provides
     static Retrofit provideRetrofit() {
-        return new Retrofit.Builder().baseUrl(BASE_URL)
+        return new Retrofit.Builder().baseUrl(AppConstants.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(provideOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

@@ -1,23 +1,30 @@
 package com.task.mercari.repository.network;
 
 import com.task.mercari.model.Product;
+import com.task.mercari.model.ProductData;
 
 import java.util.List;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by Nitish Singh on 2019-06-01.
  */
 public interface NetworkService {
 
-    @GET("men.json")
-    Single<List<Product>> getMenProducts();
 
-    @GET("all.json")
-    Single<List<Product>> getAllProducts();
+    @GET("master.json")
+    Single<List<ProductData>> getProductDataList();
 
-    @GET("women.json")
-    Single<List<Product>> getWomenProducts();
+    @GET
+    Single<List<Product>> getMenProducts(@Url String url);
+
+    @GET
+    Single<List<Product>> getAllProducts(@Url String url);
+
+    @GET
+    Single<List<Product>> getWomenProducts(@Url String url);
 }

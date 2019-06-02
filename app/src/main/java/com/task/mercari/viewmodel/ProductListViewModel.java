@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.task.mercari.model.Product;
+import com.task.mercari.model.ProductData;
 import com.task.mercari.repository.RepositoryService;
 
 import java.util.List;
@@ -24,7 +25,10 @@ public class ProductListViewModel extends ViewModel {
     private final RepositoryService repoRepository;
     private CompositeDisposable disposable;
 
+
+    private final MutableLiveData<List<ProductData>> productDataList = new MutableLiveData<>();
     private final MutableLiveData<List<Product>> mensProducts = new MutableLiveData<>();
+
     private final MutableLiveData<List<Product>> womensProducts = new MutableLiveData<>();
     private final MutableLiveData<List<Product>> allProducts = new MutableLiveData<>();
     private final MutableLiveData<Boolean> repoLoadError = new MutableLiveData<>();
@@ -35,20 +39,22 @@ public class ProductListViewModel extends ViewModel {
     public ProductListViewModel(RepositoryService repoRepository) {
         this.repoRepository = repoRepository;
         disposable = new CompositeDisposable();
-        fetchMensProducts();
-        fetchWomensProducts();
-        fetchAllProducts();
+        fetchProductDataList();
     }
 
 
-
+    public LiveData<List<ProductData>> getProductsList() {
+        return productDataList;
+    }
 
     public LiveData<List<Product>> getMensProduct() {
         return mensProducts;
     }
+
     public LiveData<List<Product>> getWomensProduct() {
         return womensProducts;
     }
+
     public LiveData<List<Product>> getAllProduct() {
         return allProducts;
     }
@@ -62,9 +68,43 @@ public class ProductListViewModel extends ViewModel {
     }
 
 
-    private void fetchMensProducts() {
+    private void fetchProductDataList() {
         loading.setValue(true);
-        disposable.add(repoRepository.getMensProductsRepositories().subscribeOn(Schedulers.io())
+        disposable.add(repoRepository.getProductDataList().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<List<ProductData>>() {
+                    @Override
+                    public void onSuccess(List<ProductData> value) {
+                        repoLoadError.setValue(false);
+                        productDataList.setValue(value);
+                        loading.setValue(false);
+                        for (ProductData data : value) {
+
+                            if (data.getName().equalsIgnoreCase("Men")) {
+                                fetchMensProducts(data.getData());
+                            } else if (data.getName().equalsIgnoreCase("Women")) {
+                                fetchWomensProducts(data.getData());
+                            } else {
+                                fetchAllProducts(data.getData());
+                            }
+
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        repoLoadError.setValue(true);
+                        loading.setValue(false);
+                    }
+                }));
+
+    }
+
+
+    private void fetchMensProducts(String url) {
+        loading.setValue(true);
+        disposable.add(repoRepository.getMensProductsRepositories(url).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<List<Product>>() {
                     @Override
                     public void onSuccess(List<Product> value) {
@@ -82,9 +122,9 @@ public class ProductListViewModel extends ViewModel {
     }
 
 
-    private void fetchAllProducts() {
+    private void fetchAllProducts(String url) {
         loading.setValue(true);
-        disposable.add(repoRepository.getAllProductsRepositories().subscribeOn(Schedulers.io())
+        disposable.add(repoRepository.getAllProductsRepositories(url).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<List<Product>>() {
                     @Override
                     public void onSuccess(List<Product> value) {
@@ -101,9 +141,9 @@ public class ProductListViewModel extends ViewModel {
                 }));
     }
 
-    private void fetchWomensProducts() {
+    private void fetchWomensProducts(String url) {
         loading.setValue(true);
-        disposable.add(repoRepository.getWomensProductsRepositories().subscribeOn(Schedulers.io())
+        disposable.add(repoRepository.getWomensProductsRepositories(url).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<List<Product>>() {
                     @Override
                     public void onSuccess(List<Product> value) {

@@ -1,6 +1,7 @@
 package com.task.mercari.di.module;
 
 import com.task.mercari.ui.activity.MainActivity;
+import com.task.mercari.ui.activity.SplashActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -14,4 +15,7 @@ public abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector(modules = {FragmentBindingModule.class})
     abstract MainActivity bindMainActivity();
+
+    @ContributesAndroidInjector
+    abstract SplashActivity bindSplashActivity();
 }

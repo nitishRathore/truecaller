@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.task.mercari.R;
 import com.task.mercari.adapter.ProductListAdapter;
@@ -35,7 +37,8 @@ public class AllProductsFragment extends BaseFragment {
     ProductListAdapter listAdapter;
     RecyclerView.LayoutManager layoutManager;
     ProductListViewModel listViewModel;
-
+    TextView txtErrorView;
+    ContentLoadingProgressBar loadingProgressBar;
 
     public AllProductsFragment() {
         // Required empty public constructor
@@ -53,6 +56,8 @@ public class AllProductsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvAllProduct = view.findViewById(R.id.rv_all);
+        txtErrorView = view.findViewById(R.id.txt_error);
+        loadingProgressBar = view.findViewById(R.id.progress_circular);
         rvAllProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
         listAdapter = new ProductListAdapter();
         rvAllProduct.setAdapter(listAdapter);
@@ -68,6 +73,27 @@ public class AllProductsFragment extends BaseFragment {
             if(products != null){
                 rvAllProduct.setVisibility(View.VISIBLE);
                 listAdapter.setProductList(products);
+            }
+        });
+
+        listViewModel.getError().observe(this, isError -> {
+            if (isError != null) if(isError) {
+                txtErrorView.setVisibility(View.VISIBLE);
+                rvAllProduct.setVisibility(View.GONE);
+                txtErrorView.setText(getText(R.string.error));
+            }else {
+                txtErrorView.setVisibility(View.GONE);
+                txtErrorView.setText(null);
+            }
+        });
+
+        listViewModel.getLoading().observe(this, isLoading -> {
+            if (isLoading != null) {
+                loadingProgressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+                if (isLoading) {
+                    txtErrorView.setVisibility(View.GONE);
+                    rvAllProduct.setVisibility(View.GONE);
+                }
             }
         });
     }
