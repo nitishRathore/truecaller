@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.lid.lib.LabelImageView;
 import com.task.mercari.R;
 import com.task.mercari.model.Product;
 
@@ -46,7 +47,11 @@ public class ProductListAdapter  extends RecyclerView.Adapter<ProductListAdapter
             holder.txtLikes.setText(String.valueOf(product.getNumLikes()));
             holder.txtPrice.setText(String.format("$ "+product.getPrice()));
             Glide.with(holder.imgProduct).load(product.getPhoto()).into(holder.imgProduct).clearOnDetach();
-
+            if(product.getStatus().equalsIgnoreCase("sold_out")){
+                holder.imgProduct.setLabelVisual(true);
+            } else {
+                holder.imgProduct.setLabelVisual(false);
+            }
         }
 
     }
@@ -59,7 +64,7 @@ public class ProductListAdapter  extends RecyclerView.Adapter<ProductListAdapter
     class ProductViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtName,txtPrice,txtLikes,txtComments;
-        ImageView imgProduct;
+        LabelImageView imgProduct;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);

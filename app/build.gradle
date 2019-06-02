@@ -77,4 +77,5 @@ dependencies {
 
     //thirdparty libs
     implementation 'com.robertlevonyan.view:CustomFloatingActionButton:2.1.1'
+    implementation 'com.github.linger1216:labelview:v1.1.2'
 }

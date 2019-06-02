@@ -23,18 +23,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp">
 
-                <ImageView
+                <com.lid.lib.LabelImageView
                     android:id="@+id/img_product"
+                    app:label_backgroundColor="#C2185B"
+                    app:label_orientation="LEFT_TOP"
+                    app:label_text="Sold out"
+                    android:scaleType="fitXY"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
-                <!--<ImageView-->
-                <!--android:id="@+id/img_sold_out"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:scaleType="fitCenter"-->
-                <!--android:layout_gravity="top"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/badge_soldout" />-->
 
 
                 <TextView
