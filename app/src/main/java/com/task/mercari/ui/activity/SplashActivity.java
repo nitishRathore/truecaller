@@ -21,6 +21,9 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SplashActivity extends BaseActivity {
 
     @Override
@@ -33,15 +36,16 @@ public class SplashActivity extends BaseActivity {
     ViewModelFactory viewModelFactory;
 
     ProductListViewModel listViewModel;
+    @BindView(R.id.txt_error)
     TextView txtErrorView;
+
+    @BindView(R.id.progress_circular)
     ContentLoadingProgressBar loadingProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).hide();
-        txtErrorView = findViewById(R.id.txt_error);
-        loadingProgressBar = findViewById(R.id.progress_circular);
         listViewModel = ViewModelProviders.of(this,viewModelFactory).get(ProductListViewModel.class);
 
         obeserveViewModel();

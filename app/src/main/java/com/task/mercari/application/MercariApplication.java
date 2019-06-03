@@ -1,5 +1,9 @@
 package com.task.mercari.application;
 
+import android.content.Context;
+
+import androidx.multidex.MultiDex;
+
 import com.task.mercari.di.component.ApplicationComponent;
 import com.task.mercari.di.component.DaggerApplicationComponent;
 
@@ -18,5 +22,12 @@ public class MercariApplication extends DaggerApplication {
         component.inject(this);
 
         return component;
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }

@@ -26,6 +26,8 @@ import com.task.mercari.viewmodel.ProductListViewModel;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -39,12 +41,15 @@ public class MenProductsFragment extends BaseFragment {
     @Inject
     ViewModelFactory viewModelFactory;
 
+    @BindView(R.id.rv_mens)
     RecyclerView rvMensProduct;
+    @BindView(R.id.txt_error)
+    TextView txtErrorView;
+    @BindView(R.id.progress_circular)
+    ContentLoadingProgressBar loadingProgressBar;
     ProductListAdapter listAdapter;
     RecyclerView.LayoutManager layoutManager;
     ProductListViewModel listViewModel;
-    TextView txtErrorView;
-    ContentLoadingProgressBar loadingProgressBar;
 
     @Override
     protected int layoutRes() {
@@ -54,9 +59,6 @@ public class MenProductsFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvMensProduct = view.findViewById(R.id.rv_mens);
-        txtErrorView = view.findViewById(R.id.txt_error);
-        loadingProgressBar = view.findViewById(R.id.progress_circular);
         rvMensProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
         listAdapter = new ProductListAdapter();
         rvMensProduct.setAdapter(listAdapter);

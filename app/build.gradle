@@ -24,6 +24,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
@@ -71,6 +72,9 @@ dependencies {
     //butterknife
     implementation "com.jakewharton:butterknife:$butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+    kapt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+
+
     //multidex
     implementation "com.android.support:multidex:$mulitdexVersion"
     implementation 'com.google.android.material:material:1.1.0-alpha07'

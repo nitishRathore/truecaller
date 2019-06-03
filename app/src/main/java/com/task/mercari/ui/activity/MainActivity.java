@@ -29,8 +29,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
-        viewPager = findViewById(R.id.viewpager);
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentAdapter);
     }
