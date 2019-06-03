@@ -27,9 +27,27 @@
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="@dimen/default_20sp"
                 app:layout_constraintBottom_toBottomOf="@id/icon"
                 android:textColor="@color/colorAccent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_error"
+                android:textStyle="bold"
+                android:textSize="@dimen/default_20sp"
+                android:visibility="gone"
+                android:textColor="@color/colorAccent"/>
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/progress_circular"
+                android:theme="@style/Widget.AppCompat.ProgressBar"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
         </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

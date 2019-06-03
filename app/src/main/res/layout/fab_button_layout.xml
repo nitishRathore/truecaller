@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-
     android:id="@+id/fab"
     android:orientation="vertical">
 
@@ -16,9 +15,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sell"
+            android:text="@string/sell"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="@dimen/default_18sp"
             android:textStyle="bold" />
 
         <ImageView

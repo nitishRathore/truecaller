@@ -1,12 +1,14 @@
 package com.task.mercari.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.task.mercari.R;
 import com.task.mercari.base.BaseActivity;
@@ -31,11 +33,15 @@ public class SplashActivity extends BaseActivity {
     ViewModelFactory viewModelFactory;
 
     ProductListViewModel listViewModel;
+    TextView txtErrorView;
+    ContentLoadingProgressBar loadingProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        txtErrorView = findViewById(R.id.txt_error);
+        loadingProgressBar = findViewById(R.id.progress_circular);
         listViewModel = ViewModelProviders.of(this,viewModelFactory).get(ProductListViewModel.class);
 
         obeserveViewModel();
@@ -48,6 +54,27 @@ public class SplashActivity extends BaseActivity {
                Intent intent = new Intent(this,MainActivity.class);
                startActivity(intent);
                this.finish();
+            }
+        });
+
+
+        listViewModel.getError().observe(this, isError -> {
+            if (isError != null) if(isError) {
+                txtErrorView.setVisibility(View.VISIBLE);
+                txtErrorView.setText(getText(R.string.error));
+            }else {
+                txtErrorView.setVisibility(View.GONE);
+                txtErrorView.setText(null);
+            }
+        });
+
+        listViewModel.getLoading().observe(this, isLoading -> {
+            if (isLoading != null) {
+                loadingProgressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+                if (isLoading) {
+                    txtErrorView.setVisibility(View.GONE);
+
+                }
             }
         });
     }

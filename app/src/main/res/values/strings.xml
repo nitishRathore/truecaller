@@ -5,6 +5,8 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="error">An Error Occurred While Loading Data!</string>
+    <string name="sell">Sell</string>
+    <string name="sold_out">Sold out</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

@@ -21,13 +21,13 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="@dimen/default_200dp">
 
                 <com.lid.lib.LabelImageView
                     android:id="@+id/img_product"
-                    app:label_backgroundColor="#C2185B"
+                    app:label_backgroundColor="@color/colorAccent"
                     app:label_orientation="LEFT_TOP"
-                    app:label_text="Sold out"
+                    app:label_text="@string/sold_out"
                     android:scaleType="fitXY"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
@@ -39,11 +39,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="@dimen/default_10dp"
+                    android:layout_marginBottom="@dimen/default_10dp"
                     android:maxLines="1"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/default_20sp" />
 
 
             </FrameLayout>
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:padding="@dimen/default_5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -71,27 +71,25 @@
                         android:id="@+id/txt_likes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="@dimen/default_5dp"
                         android:maxLines="1"
-                        android:text="0"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/default_14sp" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/default_10dp"
                         android:src="@drawable/ic_comment" />
 
                     <TextView
                         android:id="@+id/txt_comments"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="@dimen/default_5dp"
                         android:maxLines="1"
-                        android:text="0"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/default_14sp" />
 
                 </LinearLayout>
 
@@ -106,11 +104,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_gravity="end"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="@dimen/default_10dp"
                         android:maxLines="1"
-                        android:text="0"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/default_14sp" />
                 </RelativeLayout>
             </LinearLayout>
 

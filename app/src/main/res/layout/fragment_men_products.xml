@@ -17,7 +17,7 @@
         android:id="@+id/txt_error"
         android:visibility="gone"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/default_20sp"
         android:textStyle="bold"
 
         android:layout_gravity="center"/>

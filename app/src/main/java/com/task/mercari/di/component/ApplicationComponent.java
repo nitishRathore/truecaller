@@ -2,7 +2,7 @@ package com.task.mercari.di.component;
 
 import android.app.Application;
 
-import com.task.mercari.base.BaseApplication;
+import com.task.mercari.application.MercariApplication;
 import com.task.mercari.di.module.ActivityBindingModule;
 import com.task.mercari.di.module.ContextModule;
 import com.task.mercari.di.module.NetworkModule;
@@ -22,7 +22,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Component(modules = {ContextModule.class, NetworkModule.class, AndroidSupportInjectionModule.class, ActivityBindingModule.class})
 public interface ApplicationComponent extends AndroidInjector<DaggerApplication> {
 
-    void inject(BaseApplication application);
+    void inject(MercariApplication application);
 
     @Component.Builder
     interface Builder {

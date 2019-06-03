@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Mercari2.iml" filepath="$PROJECT_DIR$/Mercari2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/mvvm_demo.iml" filepath="$PROJECT_DIR$/.idea/mvvm_demo.iml" />
     </modules>
   </component>
 </project>
