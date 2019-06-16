@@ -7,4 +7,5 @@
     <dimen name="default_200dp">200dp</dimen>
     <dimen name="default_5dp">5dp</dimen>
     <dimen name="default_14sp">14sp</dimen>
+    <dimen name="default_150dp">150dp</dimen>
 </resources>
