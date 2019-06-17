@@ -1,13 +1,21 @@
 package com.task.truecaller.viewmodel;
 
+import android.os.Build;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.task.truecaller.repository.RepositoryService;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -123,51 +131,91 @@ public class TrueCallerViewModel extends ViewModel {
 
 
     private void findEveryTenthCharacter(String body) {
-
-        String[] charArray = body.split("");
-        List<String> characterList = Arrays.asList(charArray);
-
-//        AtomicInteger skip = new AtomicInteger(10);
-        int skip = 9;
-//        AtomicInteger size = new AtomicInteger(characterList.size());
-        int size = characterList.size();
-        AtomicInteger limit = new AtomicInteger((size / skip) + Math.min(size % skip, 1));
-
-        List<String> result = Stream.iterate(characterList, l -> l.subList(skip, l.size()))
-                .limit(limit.get())
-                .map(l -> l.get(0))
-                .collect(Collectors.toList());
-
-                StringBuilder stringBuilder = new StringBuilder();
-                for (String word : result) {
-                    stringBuilder.append(word).append("\n");
+        Reader reader = new StringReader(body);
+        int ch;
+        List<String> list = new ArrayList<>();
+        int index = 1;
+        try {
+            while ((ch = reader.read()) != -1) {
+                if (!Character.isWhitespace((char) ch)) {
+                    if ((++index) % 10 == 0) {
+                        list.add(String.valueOf((char) ch));
+                    }
                 }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                //ignore
+            }
+        }
+
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String word : list) {
+            stringBuilder.append(word).append("\n");
+        }
 
         everytrueCall10thCharacter.postValue(stringBuilder.toString());
+
+
+//        String[] charArray = body.split("");
+//        List<String> characterList = Arrays.asList(charArray);
+//
+//
+//                StringBuilder stringBuilder = new StringBuilder();
+//                for (String word : result) {
+//                    stringBuilder.append(word).append("\n");
+//                }
+//
+//        everytrueCall10thCharacter.postValue(stringBuilder.toString());
     }
 
     private void wordCount(String body) {
-        String[] splitArray = body.split(" ");
-        if (splitArray.length <= 0) {
-            return;
-        }
-        ConcurrentHashMap<String, Integer> wordsCount = new ConcurrentHashMap<>();
-        for (String word : splitArray) {
-            Integer count = wordsCount.get(word.trim());
-            if (count != null) {
-
-                count++;
-            } else {
-                count = 1;
+        int ch;
+        Reader reader = new StringReader(body);
+        Map<String, Integer> wordsCount = new HashMap<>();
+        StringBuilder word = new StringBuilder();
+        try {
+            while ((ch = reader.read()) != -1) {
+                if (Character.isWhitespace((char) ch)) {
+                    if (word.length() > 0) {
+                        String wordSmallCase = word.toString().toLowerCase();
+                        Integer c = wordsCount.get(wordSmallCase);
+                        int count = 0;
+                        if (c != null) {
+                            count = c;
+                        }
+                        count++;
+                        wordsCount.put(wordSmallCase, count);
+                        word.delete(0, word.length());
+                    }
+                } else {
+                    word.append((char) ch);
+                }
             }
-            wordsCount.put(word.trim(), count);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                //ignore
+            }
         }
+
+
         StringBuilder stringBuilder = new StringBuilder();
-        wordsCount.forEach((key, value) -> {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            wordsCount.forEach((key, value) -> {
 
-            stringBuilder.append(key).append(" : ").append(value).append("\n");
+                stringBuilder.append(key).append(" : ").append(value).append("\n");
 
-        });
+            });
+        }
         wordCountsMaps.postValue(stringBuilder.toString());
 
     }
